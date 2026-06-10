@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ESP32-S3 Wiring Diagram</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f3f4f6;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    function ESP32S3WiringDiagram() {
+      const line = (x1, y1, x2, y2, color = '#444', width = 3) => (
+        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={width} />
+      );
+
+      const label = (x, y, text, color = '#111', size = 14) => (
+        <text x={x} y={y} fill={color} fontSize={size} fontFamily="Arial" fontWeight="600">
+          {text}
+        </text>
+      );
+
+      return (
+        <div className="w-full h-screen bg-white flex items-center justify-center overflow-auto p-4">
+          <svg id="wiring-svg" width="1400" height="950" viewBox="0 0 1400 950" className="border rounded-2xl shadow-xl bg-[#fafafa]">
+
+            {/* GRID */}
+            <defs>
+              <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e5e5e5" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="1400" height="950" fill="url(#smallGrid)" />
+
+            {/* ESP32 */}
+            <rect x="540" y="220" rx="20" ry="20" width="300" height="480" fill="#1f2937" stroke="#000" strokeWidth="4" />
+            <rect x="620" y="280" width="140" height="170" rx="10" fill="#9ca3af" stroke="#555" />
+            {label(625, 330, 'ESP32-S3', '#111', 24)}
+            {label(610, 370, 'ESP32-S3-WROOM-1', '#111', 16)}
+
+            {/* LEFT PINS */}
+            {[0,1,2,3,4,5,6,7,8,9].map((i)=>(
+              <circle key={i} cx="540" cy={260 + i*35} r="5" fill="#d1d5db" />
+            ))}
+
+            {/* RIGHT PINS */}
+            {[0,1,2,3,4,5,6,7,8,9].map((i)=>(
+              <circle key={i} cx="840" cy={260 + i*35} r="5" fill="#d1d5db" />
+            ))}
+
+            {/* MAX30102 */}
+            <rect x="120" y="140" width="160" height="170" rx="12" fill="#2563eb" stroke="#0f172a" strokeWidth="3" />
+            {label(145, 130, 'MAX30102', '#1d4ed8', 22)}
+            {label(145, 185, 'Pulse Oximeter', '#fff', 16)}
+
+            {/* MPU6050 */}
+            <rect x="120" y="380" width="160" height="170" rx="12" fill="#7c3aed" stroke="#0f172a" strokeWidth="3" />
+            {label(145, 370, 'MPU6050', '#6d28d9', 22)}
+            {label(145, 425, 'Accelerometer', '#fff', 16)}
+
+            {/* AD8232 */}
+            <rect x="120" y="650" width="170" height="170" rx="12" fill="#dc2626" stroke="#0f172a" strokeWidth="3" />
+            {label(145, 640, 'AD8232 ECG', '#b91c1c', 22)}
+            {label(145, 705, 'ECG Sensor', '#fff', 16)}
+
+            {/* OLED */}
+            <rect x="1060" y="180" width="170" height="120" rx="12" fill="#2563eb" stroke="#0f172a" strokeWidth="3" />
+            {label(1080, 170, 'OLED DISPLAY', '#1d4ed8', 20)}
+            <rect x="1100" y="210" width="90" height="50" rx="5" fill="#111827" />
+
+            {/* GPS */}
+            <rect x="1040" y="380" width="190" height="140" rx="12" fill="#0f766e" stroke="#0f172a" strokeWidth="3" />
+            {label(1080, 370, 'GPS NEO-6M', '#0f766e', 22)}
+
+            {/* NFC */}
+            <rect x="1040" y="620" width="190" height="170" rx="12" fill="#16a34a" stroke="#0f172a" strokeWidth="3" />
+            {label(1080, 610, 'PN555 NFC', '#15803d', 22)}
+
+            {/* Battery */}
+            <rect x="1180" y="820" width="120" height="90" rx="12" fill="#d1d5db" stroke="#111" strokeWidth="3" />
+            {label(1210, 860, 'Li-Po', '#111', 18)}
+
+            {/* TP4056 */}
+            <rect x="930" y="820" width="180" height="90" rx="12" fill="#2563eb" stroke="#111" strokeWidth="3" />
+            {label(965, 860, 'TP4056 Charger', '#fff', 18)}
+
+            {/* CONNECTIONS */}
+
+            {/* MAX30102 */}
+            {line(280,180,540,180,'#ef4444')} 
+            {line(280,210,500,210,'#2563eb')}
+            {line(500,210,500,290,'#2563eb')}
+            {line(500,290,540,290,'#2563eb')}
+
+            {line(280,240,480,240,'#9333ea')}
+            {line(480,240,480,325,'#9333ea')}
+            {line(480,325,540,325,'#9333ea')}
+
+            {line(280,270,450,270,'#111')}
+            {line(450,270,450,360,'#111')}
+            {line(450,360,540,360,'#111')}
+
+            {/* MPU6050 */}
+            {line(280,420,510,420,'#2563eb')}
+            {line(510,420,510,430,'#2563eb')}
+            {line(510,430,540,430,'#2563eb')}
+
+            {line(280,455,500,455,'#9333ea')}
+            {line(500,455,500,465,'#9333ea')}
+            {line(500,465,540,465,'#9333ea')}
+
+            {line(280,490,480,490,'#111')}
+            {line(480,490,480,500,'#111')}
+            {line(480,500,540,500,'#111')}
+
+            {/* AD8232 */}
+            {line(290,700,520,700,'#f97316')}
+            {line(520,700,520,570,'#f97316')}
+            {line(520,570,540,570,'#f97316')}
+
+            {line(290,740,500,740,'#111')}
+            {line(500,740,500,605,'#111')}
+            {line(500,605,540,605,'#111')}
+
+            {/* OLED */}
+            {line(840,290,960,290,'#2563eb')}
+            {line(960,290,960,240,'#2563eb')}
+            {line(960,240,1060,240,'#2563eb')}
+
+            {line(840,325,980,325,'#9333ea')}
+            {line(980,325,980,270,'#9333ea')}
+            {line(980,270,1060,270,'#9333ea')}
+
+            {line(840,360,1000,360,'#111')}
+            {line(1000,360,1000,290,'#111')}
+            {line(1000,290,1060,290,'#111')}
+
+            {/* GPS */}
+            {line(840,430,1000,430,'#10b981')}
+            {line(1000,430,1000,430,'#10b981')}
+            {line(1000,430,1040,430,'#10b981')}
+
+            {line(840,465,980,465,'#ef4444')}
+            {line(980,465,980,470,'#ef4444')}
+            {line(980,470,1040,470,'#ef4444')}
+
+            {line(840,500,950,500,'#111')}
+            {line(950,500,950,510,'#111')}
+            {line(950,510,1040,510,'#111')}
+
+            {/* NFC */}
+            {line(840,570,970,570,'#2563eb')}
+            {line(970,570,970,680,'#2563eb')}
+            {line(970,680,1040,680,'#2563eb')}
+
+            {line(840,605,990,605,'#9333ea')}
+            {line(990,605,990,715,'#9333ea')}
+            {line(990,715,1040,715,'#9333ea')}
+
+            {line(840,640,950,640,'#111')}
+            {line(950,640,950,750,'#111')}
+            {line(950,750,1040,750,'#111')}
+
+            {/* Battery Charger */}
+            {line(1110,860,1180,860,'#ef4444')}
+            {line(1110,890,1180,890,'#111')}
+
+            {/* LEGEND */}
+            <rect x="40" y="40" width="250" height="170" rx="16" fill="#fff" stroke="#333" strokeWidth="2" />
+            {label(110, 75, 'LEGEND', '#111', 24)}
+
+            {line(60,100,100,100,'#ef4444')} {label(120,105,'3.3V / 5V')}
+            {line(60,130,100,130,'#2563eb')} {label(120,135,'I2C SDA/SCL')}
+            {line(60,160,100,160,'#9333ea')} {label(120,165,'Sensor Data')}
+            {line(60,190,100,190,'#111')} {label(120,195,'Ground GND')}
+
+            {/* TITLE */}
+            {label(420, 80, 'ESP32-S3 HEALTH MONITOR SYSTEM - PROFESSIONAL WIRING DIAGRAM', '#111827', 28)}
+
+          </svg>
+        </div>
+      );
+    }
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<ESP32S3WiringDiagram />);
+  </script>
+</body>
+</html>

@@ -875,7 +875,7 @@
   }
 
   function fetchVitals() {
-    fetch("https://health-band-46333-default-rtdb.asia-southeast1.firebasedatabase.app/.json?orderBy=\"$key\"&limitToLast=1")
+    fetch("https://maternal-health-band-default-rtdb.asia-southeast1.firebasedatabase.app/sensor_logs.json?orderBy=\"$key\"&limitToLast=1")
       .then(res => res.json())
       .then(data => {
         if (data && typeof data === 'object') {
